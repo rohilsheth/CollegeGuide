@@ -20,6 +20,22 @@ public class Schools implements Serializable{
         this.SATScorelow = SATScorelow;
     }
 
+    public double getSATScorelow() {
+        return SATScorelow;
+    }
+
+    public double getSATScorehigh() {
+        return SATScorehigh;
+    }
+
+    public double getACTScorehigh() {
+        return ACTScorehigh;
+    }
+
+    public double getACTScorelow() {
+        return ACTScorelow;
+    }
+
     public void setACTScorehigh(double ACTScorehigh) {
         this.ACTScorehigh = ACTScorehigh;
     }

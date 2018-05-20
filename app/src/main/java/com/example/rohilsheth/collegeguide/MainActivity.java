@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void sendArray(ArrayList<Schools> schools) {
-        //colleges.addAll(schools);
-        rFrag.updateArray(schools);
+        colleges.removeAll(schools);
+        colleges.addAll(schools);
+        rFrag.updateArray(colleges);
+        fFrag.updateArray(colleges);
     }
 }

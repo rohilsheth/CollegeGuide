@@ -26,8 +26,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -112,6 +114,7 @@ public class SearchFragment extends Fragment {
             String tempInput = input[0];
             try {
                 apiReq = "https://api.data.gov/ed/collegescorecard/v1/schools?school.name="+tempInput+"&fields=school.name,id,2015.admissions.admission_rate.overall,2015.admissions.act_scores.25th_percentile.cumulative,2015.admissions.act_scores.75th_percentile.cumulative,2015.admissions.sat_scores.25th_percentile.math,2015.admissions.sat_scores.75th_percentile.math,2015.admissions.sat_scores.25th_percentile.critical_reading,2015.admissions.sat_scores.75th_percentile.critical_reading,2015.cost.attendance.academic_year,2015.aid.median_debt.completers.overall&api_key=9DCEOKfwyuInWXJ8GTLRrEiudCqu3uZjMEMzM4Vd";
+                //apiReq = "https://api.data.gov/ed/collegescorecard/v1/schools?school.name="+tempInput+"&fields=school.name,id,2015.admissions.admission_rate.overall,2015.admissions.act_scores.25th_percentile.cumulative,2015.admissions.act_scores.75th_percentile.cumulative,2015.admissions.sat_scores.25th_percentile.math,2015.admissions.sat_scores.75th_percentile.math,2015.admissions.sat_scores.25th_percentile.critical_reading,2015.admissions.sat_scores.75th_percentile.critical_reading,2015.cost.attendance.academic_year,2015.aid.median_debt.completers.overall&api_key=9DCEOKfwyuInWXJ8GTLRrEiudCqu3uZjMEMzM4Vd";
                 URL url = new URL(apiReq);
                 URLConnection urlConnection = url.openConnection();
                 InputStream stream = urlConnection.getInputStream();

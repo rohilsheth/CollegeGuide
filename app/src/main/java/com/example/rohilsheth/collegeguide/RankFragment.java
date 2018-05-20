@@ -34,13 +34,25 @@ public class RankFragment extends Fragment {
     public void updateArray(ArrayList<Schools> arrayList){
         colleges = arrayList;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("arraykey",colleges);
+        super.onSaveInstanceState(outState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rankFragmentView = inflater.inflate(R.layout.fragment_rankings, container, false);
         listView = rankFragmentView.findViewById(R.id.ListView);
+        if(savedInstanceState!=null){
+            colleges = (ArrayList<Schools>) savedInstanceState.getSerializable("arraykey");
+        }
         final CustomAdapter CollegeAdapter = new CustomAdapter(getContext(),R.layout.listlayout,colleges);
-        listView.setAdapter(CollegeAdapter);
+        if(colleges!=null) {
+            listView.setAdapter(CollegeAdapter);
+        }
         return rankFragmentView;
 
     }
