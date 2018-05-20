@@ -8,16 +8,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
 
-
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,SearchFragment.addClicked  {
+    int rankID;
+    HomeFragment hFrag;
+    SearchFragment searchFrag;
+    RankFragment rFrag;
+    FitFragment fFrag;
+    ArrayList<Schools> colleges;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        colleges = new ArrayList<>();
         loadFragment(new HomeFragment());
-
+        hFrag = new HomeFragment();
+        searchFrag = new SearchFragment();
+        rFrag = new RankFragment();
+        fFrag = new FitFragment();
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
     }
@@ -29,19 +38,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                fragment = new HomeFragment();
+                fragment = hFrag;
                 break;
 
             case R.id.navigation_rankings:
-                fragment = new RankFragment();
+                fragment=rFrag;
                 break;
 
             case R.id.navigation_search:
-                fragment = new SearchFragment();
+                fragment = searchFrag;
                 break;
 
             case R.id.navigation_fit:
-                fragment = new FitFragment();
+                fragment = fFrag;
                 break;
         }
 
@@ -51,8 +60,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            fragment.getId();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void sendArray(ArrayList<Schools> schools) {
+        //colleges.addAll(schools);
+        rFrag.updateArray(schools);
     }
 }
