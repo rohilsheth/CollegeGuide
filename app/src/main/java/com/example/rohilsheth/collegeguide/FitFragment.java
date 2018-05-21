@@ -64,59 +64,62 @@ public class FitFragment extends Fragment {
                 names.add(colleges.get(j).getName());
             }
         }
-        dataType="SAT";
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item,names);
-        collegeList.setAdapter(adapter);
-        collegeList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                chosen=i;
-                BarData data = new BarData(getDataSet());
-                barChart.setData(data);
-                barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-                data.setBarWidth(0.7f);
-                barChart.setFitBars(true);
-                barChart.animateXY(1000,1000);
-                barChart.invalidate();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if(i==R.id.radioButton3){
-                    dataType="SAT";
+        if(colleges!=null) {
+            dataType = "SAT";
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, names);
+            collegeList.setAdapter(adapter);
+            collegeList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    chosen = i;
                     BarData data = new BarData(getDataSet());
                     barChart.setData(data);
                     barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
                     data.setBarWidth(0.7f);
                     barChart.setFitBars(true);
-                    barChart.animateXY(1000,1000);
+                    barChart.animateXY(1000, 1000);
                     barChart.invalidate();
                 }
-                if(i==R.id.radioButton4){
-                    dataType="ACT";
-                    BarData data = new BarData(getDataSet());
-                    barChart.setData(data);
-                    barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-                    data.setBarWidth(0.7f);
-                    barChart.setFitBars(true);
-                    barChart.animateXY(1000,1000);
-                    barChart.invalidate();
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
                 }
-            }
-        });
-        BarData data = new BarData(getDataSet());
-        barChart.setData(data);
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-        data.setBarWidth(0.7f);
-        barChart.setFitBars(true);
-        barChart.animateXY(1000,1000);
-        barChart.invalidate();
+            });
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    if (i == R.id.radioButton3) {
+                        dataType = "SAT";
+                        BarData data = new BarData(getDataSet());
+                        barChart.setData(data);
+                        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+                        data.setBarWidth(0.7f);
+                        barChart.setFitBars(true);
+                        barChart.animateXY(1000, 1000);
+                        barChart.invalidate();
+                    }
+                    if (i == R.id.radioButton4) {
+                        dataType = "ACT";
+                        BarData data = new BarData(getDataSet());
+                        barChart.setData(data);
+                        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+                        data.setBarWidth(0.7f);
+                        barChart.setFitBars(true);
+                        barChart.animateXY(1000, 1000);
+                        barChart.invalidate();
+                    }
+                }
+            });
+            BarData data = new BarData(getDataSet());
+            barChart.setData(data);
+            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+            data.setBarWidth(0.7f);
+            barChart.setFitBars(true);
+            barChart.animateXY(1000, 1000);
+            barChart.invalidate();
+
+        }
         return fitFragmentView;
     }
     private BarDataSet getDataSet() {

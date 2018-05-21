@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,8 +114,11 @@ public class SearchFragment extends Fragment {
         protected Void doInBackground(String... input) {
             String tempInput = input[0];
             try {
-                apiReq = "https://api.data.gov/ed/collegescorecard/v1/schools?school.name="+tempInput+"&fields=school.name,id,2015.admissions.admission_rate.overall,2015.admissions.act_scores.25th_percentile.cumulative,2015.admissions.act_scores.75th_percentile.cumulative,2015.admissions.sat_scores.25th_percentile.math,2015.admissions.sat_scores.75th_percentile.math,2015.admissions.sat_scores.25th_percentile.critical_reading,2015.admissions.sat_scores.75th_percentile.critical_reading,2015.cost.attendance.academic_year,2015.aid.median_debt.completers.overall&api_key=9DCEOKfwyuInWXJ8GTLRrEiudCqu3uZjMEMzM4Vd";
+                String encodedURL = URLEncoder.encode(tempInput,"UTF-8");
+                apiReq = "https://api.data.gov/ed/collegescorecard/v1/schools?school.name="+encodedURL+"&fields=school.name,id,2015.admissions.admission_rate.overall,2015.admissions.act_scores.25th_percentile.cumulative,2015.admissions.act_scores.75th_percentile.cumulative,2015.admissions.sat_scores.25th_percentile.math,2015.admissions.sat_scores.75th_percentile.math,2015.admissions.sat_scores.25th_percentile.critical_reading,2015.admissions.sat_scores.75th_percentile.critical_reading,2015.cost.attendance.academic_year,2015.aid.median_debt.completers.overall&api_key=9DCEOKfwyuInWXJ8GTLRrEiudCqu3uZjMEMzM4Vd";
                 //apiReq = "https://api.data.gov/ed/collegescorecard/v1/schools?school.name="+tempInput+"&fields=school.name,id,2015.admissions.admission_rate.overall,2015.admissions.act_scores.25th_percentile.cumulative,2015.admissions.act_scores.75th_percentile.cumulative,2015.admissions.sat_scores.25th_percentile.math,2015.admissions.sat_scores.75th_percentile.math,2015.admissions.sat_scores.25th_percentile.critical_reading,2015.admissions.sat_scores.75th_percentile.critical_reading,2015.cost.attendance.academic_year,2015.aid.median_debt.completers.overall&api_key=9DCEOKfwyuInWXJ8GTLRrEiudCqu3uZjMEMzM4Vd";
+                Log.d("TAG",encodedURL);
+                Log.d("TAG",apiReq);
                 URL url = new URL(apiReq);
                 URLConnection urlConnection = url.openConnection();
                 InputStream stream = urlConnection.getInputStream();
@@ -173,6 +177,7 @@ public class SearchFragment extends Fragment {
                 addButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Toast.makeText(getContext(),"Added!", Toast.LENGTH_SHORT).show();
                         colleges.add(newSchool);
                         Log.d("TAG",newSchool+"");
                         Log.d("Tag",colleges+"");
@@ -184,9 +189,9 @@ public class SearchFragment extends Fragment {
                 });
             } catch (JSONException e) {
                 e.printStackTrace();
-            } //catch (ClassCastException e){
-              //  Toast.makeText(getActivity(), "Please clarify your choice", Toast.LENGTH_SHORT).show();
-            //}
+            } catch (ClassCastException e){
+                Toast.makeText(getActivity(), "Please clarify your choice", Toast.LENGTH_SHORT).show();
+            }
             super.onPostExecute(aVoid);
         }
     }

@@ -1,6 +1,7 @@
 package com.example.rohilsheth.collegeguide;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -19,7 +20,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -52,6 +55,7 @@ public class HomeFragment extends Fragment {
         RD = homeFragmentView.findViewById(R.id.textView9);
         ED = homeFragmentView.findViewById(R.id.textView10);
         save = homeFragmentView.findViewById(R.id.saveButton);
+        save.setTextColor(Color.RED);
         Calendar EDstart_calendar = Calendar.getInstance();
         Calendar EDend_calendar = Calendar.getInstance();
         EDend_calendar.set(2018, 10, 1); // 10 = November, month start at 0 = January
@@ -143,7 +147,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    OutputStreamWriter writer = new OutputStreamWriter(getContext().openFileOutput(file, Context.MODE_WORLD_WRITEABLE));
+                    //FileOutputStream fileOutputStream = new FileOutputStream("info.json");
+                    //File files = new File(file);
+                    //files.delete();
+                    OutputStreamWriter writer = new OutputStreamWriter(getContext().openFileOutput(file, Context.MODE_PRIVATE));
                     if(SAT!=null){
                         SATtext.setText(SAT);
                     }
@@ -151,8 +158,12 @@ public class HomeFragment extends Fragment {
                         actText.setText(ACT);
                     }
                     dataToWrite = "{sat:"+SAT+",act:"+ACT+"}";
+                    Log.d("TAG",dataToWrite);
+                    //byte[] contentInByte = dataToWrite.getBytes();
                     writer.write(dataToWrite);
                     writer.close();
+                    //fileOutputStream.write(contentInByte);
+                    //fileOutputStream.close();
                     saved=true;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -163,6 +174,7 @@ public class HomeFragment extends Fragment {
         });
 
             try {
+                allInfo="";
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getContext().openFileInput(file)));
                 String currentLine;
                 currentLine = bufferedReader.readLine();
